@@ -11,13 +11,14 @@ jobs:
         php-versions: [8.3, 8.4, 8.5]
     steps:
       - uses: actions/checkout@v4
+      - name: Install ImageMagick
+        run: sudo apt-get install -y imagemagick libmagickwand-dev
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-versions }}
+          extensions: imagick
           coverage: none
-      - name: Install ImageMagick
-        run: sudo apt-get install -y imagemagick
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
       - name: Run tests
