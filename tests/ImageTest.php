@@ -255,4 +255,32 @@ class ImageTest extends TestCase
         $this->assertEquals(IMAGETYPE_JPEG, $type);
     }
 
+    // --- fit() output dimensions ---
+
+    public function test_fit_width_only_produces_correct_width(): void
+    {
+        // 200x200 source, fit to width 100 -> 100x100
+        $size = $this->image()->fit(100, null)->size();
+        $this->assertEquals(100, $size->width);
+    }
+
+    public function test_fit_height_only_produces_correct_height(): void
+    {
+        // 200x200 source, fit to height 100 -> 100x100
+        $size = $this->image()->fit(null, 100)->size();
+        $this->assertEquals(100, $size->height);
+    }
+
+    public function test_fit_width_only_preserves_aspect_ratio(): void
+    {
+        $size = $this->image()->fit(100, null)->size();
+        $this->assertEqualsWithDelta(1.0, $size->width / $size->height, 0.01);
+    }
+
+    public function test_fit_height_only_preserves_aspect_ratio(): void
+    {
+        $size = $this->image()->fit(null, 100)->size();
+        $this->assertEqualsWithDelta(1.0, $size->width / $size->height, 0.01);
+    }
+
 }

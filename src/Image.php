@@ -9,10 +9,13 @@
 
 namespace Joby\Smol\Image;
 
+use InvalidArgumentException;
 use Joby\Smol\Image\Sizers\CoverSize;
 use Joby\Smol\Image\Sizers\FitSize;
+use Joby\Smol\Image\Sizers\HeightSize;
 use Joby\Smol\Image\Sizers\OriginalSize;
 use Joby\Smol\Image\Sizers\Sizer;
+use Joby\Smol\Image\Sizers\WidthSize;
 use RuntimeException;
 
 /**
@@ -108,14 +111,27 @@ class Image
     /**
      * Create an instance of this object that will render this image scaled down to fit within the given bounding box, including upscaling it to meet the bounding box dimensions if necessary.
      * 
-     * @param int<1,max> $width
-     * @param int<1,max> $height
+     * You can optionally pass one dimension as null, and then the image will be scaled to exactly match the one that was provided.
+     * 
+     * @param int<1,max>|null $width
+     * @param int<1,max>|null $height
      */
-    public function fit(int $width, int $height): static
+    public function fit(int|null $width, int|null $height): static
     {
-        return $this->withSizer(
-            new FitSize($width, $height),
-        );
+        if ($width === null && $height === null)
+            throw new InvalidArgumentException("You must provide at least one of \$height or \$width to fit an Image");
+        elseif ($width === null)
+            return $this->withSizer(
+                new HeightSize($height),
+            );
+        else if ($height === null)
+            return $this->withSizer(
+                new WidthSize($width),
+            );
+        else
+            return $this->withSizer(
+                new FitSize($width, $height),
+            );
     }
 
     /**
