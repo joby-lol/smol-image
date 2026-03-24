@@ -1,0 +1,31 @@
+{
+    "name": "joby/smol-image",
+    "description": "A tightly-focused image manipulation library that eschews kitchen-sink approaches in favor of simple API and broader driver support.",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Joby\\Smol\\Image\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Joby\\Smol\\Image\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Joby Elliott",
+            "email": "code@joby.lol"
+        }
+    ],
+    "require-dev": {
+        "php": ">=8.3",
+        "ext-gd": "*",
+        "phpunit/phpunit": "^12.1",
+        "phpstan/phpstan": "^2.1"
+    }
+}

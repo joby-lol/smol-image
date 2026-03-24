@@ -1,0 +1,4 @@
+output/*
+!.gitkeep
+fixtures/*
+!fixtures/200x200.png
