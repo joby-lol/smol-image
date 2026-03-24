@@ -5,6 +5,7 @@ namespace Joby\Smol\Image;
 use InvalidArgumentException;
 use Joby\Smol\Image\Drivers\GdDriver;
 use Joby\Smol\Image\Sizers\OriginalSize;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 
@@ -32,6 +33,8 @@ class SmolImageTest extends TestCase
         $prop->setValue(null, null);
         $this->assertInstanceOf(GdDriver::class, SmolImage::driver());
     }
+
+    #[AllowMockObjectsWithoutExpectations()]
 
     public function test_set_driver_replaces_driver(): void
     {

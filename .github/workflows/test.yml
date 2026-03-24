@@ -16,6 +16,8 @@ jobs:
         with:
           php-version: ${{ matrix.php-versions }}
           coverage: none
+      - name: Install ImageMagick
+        run: sudo apt-get install -y imagemagick
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
       - name: Run tests
