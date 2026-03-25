@@ -32,7 +32,7 @@ class Image
      */
     public function __construct(
         public readonly string $source,
-        protected readonly Sizer $sizer,
+        public readonly Sizer $sizer,
         public readonly Format $format,
         public readonly int $quality,
     ) {}
