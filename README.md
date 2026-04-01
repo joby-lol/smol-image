@@ -30,17 +30,17 @@ $data = SmolImage::load('/path/to/source.jpg')
 ## Sizing
 ```php
 // Scale and crop to exactly fill the given dimensions (upscales if necessary)
-$image->cover($width, $height);
+$resized = $image->cover($width, $height);
 
 // Scale to fit within the given bounding box (upscales if necessary)
-$image->fit($width, $height);
+$resized = $image->fit($width, $height);
 
 // Scale only on one dimension (upscales if necessary)
-$image->fit($width, null);
-$image->fit(null, $height);
+$resized = $image->fit($width, null);
+$resized = $image->fit(null, $height);
 
 // No transformation — output at original size
-$image->original();
+$original = $image->original();
 ```
 
 ## Output Format and Quality

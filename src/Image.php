@@ -87,13 +87,13 @@ class Image
     }
 
     /**
-     * Create a copy of this object that will render this image at its original size, as it is in the source file.
+     * Create a copy of this object that will render this image at its original size, with no blurring, as it is in the source file. Format selection remains.
      */
     public function original(): static
     {
-        return $this->withSizer(
-            new OriginalSize(),
-        );
+        return $this
+            ->withSizer(new OriginalSize)
+            ->blur(0);
     }
 
     /**
@@ -178,6 +178,10 @@ class Image
         );
     }
 
+    /**
+     * Blur this image to a level of intensity indicated by a 0-100 scale. Blurring technique and intensity may vary by driver.
+     * @param int<0,100>|null $blur
+     */
     public function blur(int|null $blur = 80): static
     {
         return new static(
