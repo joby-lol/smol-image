@@ -35,7 +35,7 @@ class Image
         public readonly Sizer $sizer,
         public readonly Format $format,
         public readonly int $quality,
-        public readonly int $blur = 0,
+        public readonly int $blur,
     ) {}
 
     /**
@@ -145,6 +145,7 @@ class Image
             $sizer,
             $this->format,
             $this->quality,
+            $this->blur,
         );
     }
 
@@ -203,6 +204,7 @@ class Image
             $this->sizer,
             $format,
             $this->quality,
+            $this->blur,
         );
     }
 
@@ -216,6 +218,7 @@ class Image
             $this->sizer,
             $this->format,
             $quality,
+            $this->blur,
         );
     }
 

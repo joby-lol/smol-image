@@ -65,6 +65,7 @@ class SmolImage
             new OriginalSize(),
             static::$format,
             static::$quality,
+            0,
         );
     }
 

@@ -101,8 +101,8 @@ class GdDriver implements DriverInterface
             $gd_image = $cropped_gd_image;
         }
         // do blur operation
-        if ($blur = $image->blur) {
-            $passes = (int) round($blur / 100 * 50);
+        if ($image->blur) {
+            $passes = (int) round($image->blur / 100 * 50);
             for ($i = 0; $i < $passes; $i++) {
                 imagefilter($gd_image, IMG_FILTER_GAUSSIAN_BLUR);
             }
