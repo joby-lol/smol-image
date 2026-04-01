@@ -283,4 +283,42 @@ class ImageTest extends TestCase
         $this->assertEqualsWithDelta(1.0, $size->width / $size->height, 0.01);
     }
 
+    // --- blur() ---
+
+    public function test_blur_sets_value(): void
+    {
+        $this->assertEquals(80, $this->image()->blur()->blur);
+    }
+
+    public function test_blur_sets_custom_value(): void
+    {
+        $this->assertEquals(20, $this->image()->blur(20)->blur);
+    }
+
+    public function test_blur_default_is_zero(): void
+    {
+        $this->assertEquals(0, $this->image()->blur);
+    }
+
+    public function test_blur_returns_new_instance(): void
+    {
+        $image = $this->image();
+        $this->assertNotSame($image, $image->blur());
+    }
+
+    public function test_blur_preserves_source(): void
+    {
+        $this->assertEquals(static::$fixture, $this->image()->blur()->source);
+    }
+
+    public function test_blur_preserves_format(): void
+    {
+        $this->assertEquals(Format::jpeg, $this->image()->jpeg()->blur()->format);
+    }
+
+    public function test_blur_preserves_quality(): void
+    {
+        $this->assertEquals(42, $this->image()->quality(42)->blur()->quality);
+    }
+
 }

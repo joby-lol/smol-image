@@ -235,4 +235,34 @@ class GdDriverTest extends TestCase
         $this->assertEquals(400, $h);
     }
 
+    // --- blur ---
+
+    public function test_blur_produces_valid_output(): void
+    {
+        $out = $this->outputPath('blur_default.png');
+        $this->image(static::$square)->blur()->png()->save($out);
+        $this->assertFileExists($out);
+        [$w, $h] = getimagesize($out);
+        $this->assertEquals(200, $w);
+        $this->assertEquals(200, $h);
+    }
+
+    public function test_blur_does_not_affect_dimensions(): void
+    {
+        $out = $this->outputPath('blur_cover.png');
+        $this->image(static::$square)->cover(150, 100)->blur()->png()->save($out);
+        [$w, $h] = getimagesize($out);
+        $this->assertEquals(150, $w);
+        $this->assertEquals(100, $h);
+    }
+
+    public function test_blur_custom_intensity_produces_valid_output(): void
+    {
+        $out = $this->outputPath('blur_custom.png');
+        $this->image(static::$square)->blur(20)->png()->save($out);
+        $this->assertFileExists($out);
+        [, , $type] = getimagesize($out);
+        $this->assertEquals(IMAGETYPE_PNG, $type);
+    }
+
 }

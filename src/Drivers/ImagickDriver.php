@@ -20,7 +20,7 @@ class ImagickDriver implements DriverInterface
 
     public function save(Image $image, string $path): void
     {
-        $imagick = $this->size($this->getImageObject($image->source), $image);
+        $imagick = $this->transform($this->getImageObject($image->source), $image);
         $imagick->setImageFormat($this->formatString($image->format));
         $imagick->setImageCompressionQuality($image->quality);
         if (!$imagick->writeImage($path))
@@ -29,7 +29,7 @@ class ImagickDriver implements DriverInterface
 
     public function string(Image $image): string
     {
-        $imagick = $this->size($this->getImageObject($image->source), $image);
+        $imagick = $this->transform($this->getImageObject($image->source), $image);
         $imagick->setImageFormat($this->formatString($image->format));
         $imagick->setImageCompressionQuality($image->quality);
         return $imagick->getImageBlob();
@@ -43,7 +43,7 @@ class ImagickDriver implements DriverInterface
         return $imagick;
     }
 
-    protected function size(Imagick $imagick, Image $image): Imagick
+    protected function transform(Imagick $imagick, Image $image): Imagick
     {
         // do resize operation
         if ($resize = $image->resize()) {
@@ -65,6 +65,12 @@ class ImagickDriver implements DriverInterface
             );
             $imagick->setImagePage(0, 0, 0, 0);
         }
+        // do blur operation
+        if ($image->blur) {
+            $sigma = $image->blur / 100 * 20;
+            $imagick->gaussianBlurImage(0, $sigma);
+        }
+        // return transformed Imagick object
         return $imagick;
     }
 

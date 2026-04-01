@@ -63,6 +63,13 @@ class CliConvertDriver implements DriverInterface
             $parts[] = '-extent ' . escapeshellarg($crop->width . 'x' . $crop->height);
         }
 
+        // blur
+        if ($image->blur) {
+            $sigma = $image->blur / 100 * 20;
+            $parts[] = '-blur ' . escapeshellarg("0x$sigma");
+        }
+
+        // set quality
         $parts[] = '-quality ' . $image->quality;
 
         // prefix output path with format to ensure ImageMagick uses the right encoder

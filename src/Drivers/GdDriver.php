@@ -20,7 +20,7 @@ class GdDriver implements DriverInterface
 
     public function save(Image $image, string $path): void
     {
-        $gd = $this->size($this->getImageObject($image->source), $image);
+        $gd = $this->transform($this->getImageObject($image->source), $image);
         $result = match ($image->format) {
             Format::jpeg => imagejpeg($gd, $path, $image->quality),
             Format::webp => imagewebp($gd, $path, $image->quality),
@@ -32,7 +32,7 @@ class GdDriver implements DriverInterface
 
     public function string(Image $image): string
     {
-        $gd = $this->size($this->getImageObject($image->source), $image);
+        $gd = $this->transform($this->getImageObject($image->source), $image);
         ob_start();
         $result = match ($image->format) {
             Format::jpeg => imagejpeg($gd, null, $image->quality),
@@ -63,7 +63,7 @@ class GdDriver implements DriverInterface
             throw new RuntimeException("Failed to open $source with GD");
     }
 
-    protected function size(GdImage $gd_image, Image $image): GdImage
+    protected function transform(GdImage $gd_image, Image $image): GdImage
     {
         // do resize operation
         if ($resize = $image->resize()) {
@@ -99,6 +99,13 @@ class GdDriver implements DriverInterface
                 $crop->height,
             );
             $gd_image = $cropped_gd_image;
+        }
+        // do blur operation
+        if ($blur = $image->blur) {
+            $passes = (int) round($blur / 100 * 50);
+            for ($i = 0; $i < $passes; $i++) {
+                imagefilter($gd_image, IMG_FILTER_GAUSSIAN_BLUR);
+            }
         }
         // return result
         return $gd_image;

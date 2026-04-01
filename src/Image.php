@@ -35,6 +35,7 @@ class Image
         public readonly Sizer $sizer,
         public readonly Format $format,
         public readonly int $quality,
+        public readonly int $blur = 0,
     ) {}
 
     /**
@@ -174,6 +175,17 @@ class Image
     {
         return $this->withFormat(
             Format::png,
+        );
+    }
+
+    public function blur(int|null $blur = 80): static
+    {
+        return new static(
+            $this->source,
+            $this->sizer,
+            $this->format,
+            $this->quality,
+            $blur ?? 0,
         );
     }
 
