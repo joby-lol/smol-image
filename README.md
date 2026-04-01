@@ -60,6 +60,20 @@ $image->quality(90);
 
 Quality is on a scale of 0–100 and is interpreted appropriately per format. PNG compression is derived from this value automatically.
 
+## Blurring
+```php
+// Blur by a factor of 80/10
+$image->blur();
+
+// Blur by a factor of 50/100
+$image->blur(50);
+
+// Restore to zero blurring
+$image->blur(0);
+```
+
+Blurring is on a somewhat arbitrary scale of 0-100 and is interpreted differently by different drivers.
+
 ## Drivers
 
 smolImage defaults to using GD as its backend, because this is available most widely. There are also options to use Imagick or Unix command-line `convert` calls.
